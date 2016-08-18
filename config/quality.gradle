@@ -43,7 +43,7 @@ task findbugs(type: FindBugs, dependsOn: assembleDebug) {
 
     reports {
         xml.enabled = true
-        html.enabled = true
+        html.enabled = false
         xml {
             destination "$project.buildDir/reports/findbugs/findbugs.xml"
         }
