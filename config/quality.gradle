@@ -42,7 +42,7 @@ task findbugs(type: FindBugs, dependsOn: assembleDebug) {
     exclude '**/gen/**'
 
     reports {
-        xml.enabled = false
+        xml.enabled = true
         html.enabled = true
         xml {
             destination "$project.buildDir/reports/findbugs/findbugs.xml"
@@ -65,7 +65,7 @@ task pmd(type: Pmd) {
     exclude '**/gen/**'
 
     reports {
-        xml.enabled = false
+        xml.enabled = true
         html.enabled = true
         xml {
             destination "$project.buildDir/reports/pmd/pmd.xml"
@@ -79,7 +79,7 @@ task pmd(type: Pmd) {
 android {
     lintOptions {
         abortOnError true
-        xmlReport false
+        xmlReport true
         htmlReport true
         lintConfig file("${project.rootDir}/config/quality/lint/lint.xml")
         htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
