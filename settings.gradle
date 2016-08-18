@@ -15,3 +15,5 @@
  */
 
 include ':app'
+include ':permission-manager'
+project(':permission-manager').projectDir = new File('dena/permission_manager')
