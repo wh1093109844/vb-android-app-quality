@@ -21,12 +21,21 @@ import rx.Subscriber;
  * Created by hero on 2016/8/9.
  */
 
-public class PermissionHolder {
+public final class PermissionHolder {
 
     private static final String TAG = PermissionHolder.class.getSimpleName();
 
     private static List<RequestPermissionListener> list = new ArrayList<>();
 
+    private PermissionHolder() { };
+
+    /**
+     * 请求权限
+     * @param activity
+     * @param requestCode
+     * @param subscriber
+     * @param permission
+     */
     public static void requestPermission(final Activity activity, final int requestCode, final Subscriber subscriber, final String permission) {
         ActivityCompat.requestPermissions(activity, new String[]{permission}, requestCode);
         list.add(new RequestPermissionListener() {
@@ -52,6 +61,11 @@ public class PermissionHolder {
         });
     }
 
+    /**
+     * 获取IMEI
+     * @param activity
+     * @return
+     */
     public static Observable<String> getIMEI(final Activity activity) {
         return Observable.create(new Observable.OnSubscribe<String>() {
             @Override
@@ -89,6 +103,12 @@ public class PermissionHolder {
         });
     }
 
+    /**
+     * 接收请求权限返回的结果
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     public static void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         Log.i(TAG, "requestCode:" + requestCode);
         Log.i(TAG, "permissions:" + permissions);
@@ -97,10 +117,19 @@ public class PermissionHolder {
         }
     }
 
+    /**
+     * 检查是否拥有某权限
+     * @param context
+     * @param permission
+     * @return
+     */
     public static boolean checkPermission(Context context, String permission) {
         return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
     }
 
+    /**
+     * 请求权限监听
+     */
     public interface RequestPermissionListener {
         public void onCompile(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults);
     }

@@ -1,9 +1,9 @@
 apply plugin: 'com.android.application'
-apply from: '../dena/config/quality.gradle'
+apply from: '../../config/quality.gradle'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion '23.0.2'
     defaultConfig {
         applicationId "com.example.hero.permission"
         minSdkVersion 23
