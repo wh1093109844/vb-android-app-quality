@@ -19,9 +19,10 @@ apply plugin: 'pmd'
  */
 
 // Add checkstyle, findbugs, pmd and lint to the check task.
-check.dependsOn 'checkstyle', 'pmd', 'lint'
+check.dependsOn 'checkstyle', 'pmd', 'lint', 'findbugs'
 
 task checkstyle(type: Checkstyle) {
+    ignoreFailures = true
     configFile file("${rootProject.rootDir}/config/quality/checkstyle/checkstyle.xml")
     configProperties.checkstyleSuppressionsPath = file("${rootProject.rootDir}/config/quality/checkstyle/suppressions.xml").absolutePath
     source 'src'
@@ -30,33 +31,33 @@ task checkstyle(type: Checkstyle) {
     classpath = files()
 }
 
-//task findbugs(type: FindBugs, dependsOn: assembleDebug) {
-//    ignoreFailures = false
-//    effort = "max"
-//    reportLevel = "high"
-//    excludeFilter = new File("${project.rootDir}/config/quality/findbugs/findbugs-filter.xml")
-//    classes = files("${project.rootDir}/app/build/intermediates/classes")
-//
-//    source 'src'
-//    include '**/*.java'
-//    exclude '**/gen/**'
-//
-//    reports {
-//        xml.enabled = true
-//        html.enabled = false
-//        xml {
-//            destination "$project.buildDir/reports/findbugs/findbugs.xml"
-//        }
-//        html {
-//            destination "$project.buildDir/reports/findbugs/findbugs.html"
-//        }
-//    }
-//
-//    classpath = files()
-//}
+task findbugs(type: FindBugs) {
+    ignoreFailures = false
+    effort = "max"
+    reportLevel = "high"
+    excludeFilter = new File("${project.rootDir}/config/quality/findbugs/findbugs-filter.xml")
+    classes = files("${project.buildDir}/build/intermediates/classes")
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    reports {
+        xml.enabled = true
+        html.enabled = false
+        xml {
+            destination "$project.buildDir/reports/findbugs/findbugs.xml"
+        }
+        html {
+            destination "$project.buildDir/reports/findbugs/findbugs.html"
+        }
+    }
+
+    classpath = files()
+}
 
 task pmd(type: Pmd) {
-    ignoreFailures = false
+    ignoreFailures = true
     ruleSetFiles = files("${rootProject.rootDir}/config/quality/pmd/pmd-ruleset.xml")
     ruleSets = []
 
