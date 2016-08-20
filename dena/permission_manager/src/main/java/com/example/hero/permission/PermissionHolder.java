@@ -21,13 +21,13 @@ import rx.Subscriber;
  * Created by hero on 2016/8/9.
  */
 
-public final class PermissionHolder {
+public class PermissionHolder {
 
     private static final String TAG = PermissionHolder.class.getSimpleName();
 
     private static List<RequestPermissionListener> list = new ArrayList<>();
 
-    private PermissionHolder() { };
+    // private PermissionHolder() { };
 
     /**
      * 请求权限
